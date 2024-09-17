@@ -16,3 +16,22 @@
 # диапазоне от –50 до 50
 # Input: 6 -> -20 30 -40 50 10 -10
 # Output: 2
+import random
+
+list1 = [-44, 11, -9, -16, 20, -38, 46, 48, 0, -32]
+N = 10
+# for i in range(N):
+#     list1.append(random.randint(-50,50))
+print(list1)
+
+A = 0
+B = 0
+for i in range(len(list1)):
+    if list1[i] > 0:
+        A +=1
+    else:
+        if B < A:
+            B = A
+        A = 0
+
+print(B)

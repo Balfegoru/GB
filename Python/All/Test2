@@ -1,0 +1,207 @@
+ begin CharGenClassNPC
+
+;This is on the guy who creates your class.
+
+
+short state		;tracks state of questioning. -1 when over.
+Short NoLore	;blocks discussion of general topics
+float timer
+
+if ( menumode == 1)
+		return
+endif
+
+if ( state == -1 )
+	if ( OnActivate == 1 ) 
+		Activate
+	endif
+endif
+
+if ( GetHealth == 0 )
+	return
+endif
+
+;return if you've talked to captain and don't have papers
+if ( "CharGen Captain".state == -1 )		
+	SetHello 30
+	return
+endif
+
+	;greeting
+	if ( State == 0 )
+		
+		"CharGen StatsSheet"->Disable		;hide the actual scroll itself
+
+		;disable all the boat stuff outside and the guys
+		"CharGen Boat"->Disable
+		"CharGen Boat Guard 1"->disable
+		"CharGen Boat Guard 2"->disable
+		"CharGen Dock Guard"->disable
+		"CharGen_cabindoor"->disable
+		"CharGen_chest_02_empty"->disable
+		"CharGen_crate_01"->disable
+		"CharGen_crate_01_empty"->disable
+		"CharGen_crate_01_misc01"->disable
+		"CharGen_crate_02"->disable
+		"CharGen_lantern_03_sway"->disable
+		"CharGen_ship_trapdoor"->disable
+		"CharGen_barrel_01"->disable
+		"CharGen_barrel_02"->disable
+		"CharGenbarrel_01_drinks"->disable
+		"CharGen_plank"->disable
+			
+		if ( GetDistance, Player < 100 )
+			if ( State == 0 )
+				Say "vo\Misc\CharGen Class1.wav", "Ах да, мы ожидали вас. Вам нужно зарегистрироваться прежде, чем вас официально освободят. Выбирайте сами, что указать в бумагах."
+				DisablePlayerControls
+				set state to 10
+			endif
+		endif
+
+		if ( OnActivate == 1 ) 	;in case they activate him instead of moving in
+			if ( State == 0 )
+				Say "vo\Misc\CharGen Class1.wav", "Ах да, мы ожидали вас. Вам нужно зарегистрироваться прежде, чем вас официально освободят. Выбирайте сами, что указать в бумагах."
+				DisablePlayerControls
+				set state to 10
+			endif
+		endif
+
+	elseif ( State == 10 )
+		if ( SayDone == 1 )
+			EnableClassMenu
+			set State to 12
+		endif
+
+	elseif ( State == 12 )
+		if ( SayDone == 1 )
+			
+			set timer to timer + GetSecondsPassed
+
+			if ( timer > 1 )
+				Say "vo\Misc\CharGen Birth.wav", "Очень хорошо. В письме, которое мы получили ранее, упоминалось о том, что вы родились под определенным знаком. Под каким?"
+				set State to 14
+				set timer to 0
+			endif
+
+		endif
+
+	elseif ( State == 14 )
+		if ( SayDone == 1 )
+			EnableBirthMenu
+			set State to 15
+		endif
+
+	elseif ( State == 15 )
+		if ( SayDone == 1 )
+			
+			set timer to timer + GetSecondsPassed
+
+			if ( timer > 1 )
+				Say "vo\Misc\CharGen Class2.wav", "Интересно. Теперь, перед тем, как я поставлю печать на эти бумаги, подтвердите правильность информации."
+				set State to 16
+				set timer to 0
+			endif
+
+		endif
+
+	;show statreview menu
+	elseif ( State == 16 )
+		if ( SayDone == 1 )
+			EnableStatReviewMenu
+			set State to 17
+		endif
+
+	;show popup messages
+	elseif ( State == 17 )
+
+		if ( SayDone == 1 )
+			
+			set timer to timer + GetSecondsPassed
+
+			if ( timer > 1 )
+				set timer to 0
+				EnableStatsMenu
+				EnablePlayerControls
+				StartScript RaceCheck	;sets the PCRace global flag for dialogue and such
+				MessageBox "Теперь у вас есть меню Параметров, где вы всегда можете просмотреть информацию, касающуюся вас." "Готово"
+				set state to 18
+			endif
+
+		endif
+
+	elseif ( State == 18 )
+		if ( Xbox == 1 )
+			MessageBox "Press B to use your menus. When you are done with them, press B again to close them." "Готово"
+		else
+			MessageBox "Щелкните правой кнопкой, чтобы воспользоваться вашими меню. Когда закончите, нажмите ее еще раз, чтобы убрать меню." "Готово"
+		endif
+
+		set state to 20
+
+	;show papers
+	elseif ( State == 20 )
+		
+			Say "vo\Misc\CharGen Class3.wav", "Когда выйдете отсюда, покажите ваши бумаги капитану, чтобы получить пособие."
+			"CharGen StatsSheet"->Enable		;make the actual scroll show itself
+			set State to 30
+
+	;show how to pick them up
+	elseif ( State == 30 )
+
+		if ( SayDone == 1 )
+
+			set timer to timer + GetSecondsPassed
+
+			if ( timer > 1 )
+				set timer to 0
+
+				if ( Xbox == 1 )
+					MessageBox "Read your papers by pressing A while looking at them. Then select 'Take' to pick them up." "Готово"
+				else
+					MessageBox "Чтобы прочитать бумаги, наведитесь на их изображение и нажмите ^ActionActivate . Чтобы забрать их, выберите 'Взять'." "Готово"
+				endif
+	
+				EnablePlayerViewSwitch
+				EnableVanityMode
+			
+				set State to -1
+
+			endif
+
+		endif
+	
+	elseif ( State == -1 )
+
+		if ( CharGenState != -1 )
+
+			;this may need to be here for flow
+			if ( OnActivate == 1 ) 
+					Activate
+			endif
+
+			if ( GetDistance, Player < 180 )
+
+				if ( Player->GetItemCount "CharGen StatsSheet" == 0 )	;does not have sheet yet
+
+					if ( SayDone == 1)	
+				
+						set timer to timer + GetSecondsPassed
+
+						if ( timer > 5 )
+							set timer to 0
+							say, "vo\Misc\CharGen Class4.wav", "Возьмите ваши бумаги со стола и идите к капитану Гравиусу."
+						endif
+	
+					endif
+
+				endif
+
+			endif
+
+		endif
+
+	endif
+
+end CharGenClassNPC
+
+
