@@ -6,4 +6,21 @@
 
 # 5 -> 1 0 1 1 0
 # 2
+import random
+list1 = []
+N = 6
+for i in range(N):
+    list1.append(random.randint(0,1))
+print(list1)
 
+sum = 0
+for i in list1:
+    sum +=i
+
+result = 0
+if sum <= N/2:
+    result = sum
+else:
+    result = N - sum
+
+print(f"result {result}")

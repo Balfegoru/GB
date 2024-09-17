@@ -6,3 +6,26 @@
 
 # 4 4 -> 2 2
 # 5 6 -> 2 3
+
+import math as mt
+
+x,y = None,None
+# print(x,y)
+S = 9
+P = 6
+
+# x = S - y
+# S - y * y = P
+# Sy - y2 = P
+
+# y2-Sy + P = 0
+
+d = S * S - 4 * P
+if d == 0:
+    x,y = S/2,S/2
+elif d > 0:
+    x,y = (S + mt.sqrt(d)) / 2 , (S - mt.sqrt(d)) / 2
+else:
+    x,y = None,None
+
+print(f"x = {x}, y = {y}")
