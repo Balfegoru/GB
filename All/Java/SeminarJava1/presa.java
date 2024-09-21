@@ -13,35 +13,25 @@
 // "Добрый вечер, <Имя>!", если время от 18:00 до 22:59;
 // "Доброй ночи, <Имя>!", если время от 23:00 до 4:59
 import java.util.Scanner;
-import java.time.LocalTime;
 
-
-
-
-
-public class presa1 {
-
-
-
-
-
+public class presa {
     public static void main(String[] args) {
 
         //task1();
         //task2();
         //task3();
-        task4();
+        //task4();
     }
 
     public static void task4(){
 
         String str = "Добро пожаловать на курс по Java";
-        String result = "";
-        // System.out.println(str.charAt(0));
-        // for(int i = str.length()-1; i >= 0;i--){
-        //     result += str.charAt(i);
-        // }
-        System.out.println(result);
+        String[] result = str.split(" ");
+        System.out.println(str);
+
+        for(int i = result.length - 1; i >= 0;i--){
+            System.out.printf("%s ",result[i]);
+        }
     }
     public static void task3(){
         int[] nums = new int[] {3,2,2,3};
