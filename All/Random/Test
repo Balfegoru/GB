@@ -1,0 +1,14 @@
+begin 1DeathLevel
+short OpenAttempt
+
+Short controlvar
+
+If ( OnActivate == 1 )
+	If ( controlvar == 0)
+    	MessageBox "Готов ли ты погрузиться в мир полного отчаяния путник? "Готов","Оставьте меня в покое""
+		Set controlvar to 1
+	endif
+endif
+    
+
+end
