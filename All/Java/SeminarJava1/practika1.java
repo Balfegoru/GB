@@ -21,14 +21,14 @@
 public class practika1 {
     public static void main(String[] args) {
         //task1
-        int n = 5;
+        //int n = 5;
         //System.out.println(factorial(n)); 
 
         //task2
         //printEvenNums(); 
 
         //task3
-        int number = 345;
+        //int number = 345;
         // System.out.println(sumDigits(number));
 
         //task4
