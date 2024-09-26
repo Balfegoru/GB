@@ -56,7 +56,7 @@ import java.io.*;
 import java.util.logging.*;
 public class practika2 {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         // //Task1
         // String params = "query=java&sort=desc&filter=null";
@@ -183,14 +183,16 @@ public class practika2 {
         }
     }
     //task4
-    public static void task4(int[] array) {
+    public static void task4(int[] array) throws SecurityException, IOException {
 
-        Logger logger = Logger.getLogger (practika2.class.getName ());
-        ConsoleHandler ch = new ConsoleHandler();
-        logger.addHandler(ch);
+        Logger logger = Logger.getLogger(practika2.class.getName());
+        //ConsoleHandler ch = new ConsoleHandler();
+        FileHandler fh = new FileHandler("log.xml");
+        logger.addHandler(fh);
+        
         //SimpleFormatter sFormat = new SimpleFormatter();
         XMLFormatter xml = new XMLFormatter();
-        ch.setFormatter(xml);
+        fh.setFormatter(xml);
         
 
         int min = array[0];
