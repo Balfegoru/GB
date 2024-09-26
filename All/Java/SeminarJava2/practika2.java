@@ -50,10 +50,10 @@
 // сделайте запись в лог-файл log.txt в формате год-месяц-день
 // час:минуты {минимальный элемент}, {максимальный элемент}.
 
-// import java.util.Dictionary;
-// import java.util.Hashtable;
-import java.io.*;
 
+//import java.util.*;
+import java.io.*;
+import java.util.logging.*;
 public class practika2 {
 
     public static void main(String[] args) {
@@ -77,10 +77,11 @@ public class practika2 {
         //task3("Task3.txt");
 
         //Task4
-        //task4();
+        int[] array = new int[] {3,2,4,5,1,7,4,-2,-2,1,0};
+        task4(array);
 
     }
-
+    //task1
     public static String task1(String params, String resultUrl) {
                 String[] param1 = params.split("&");
             
@@ -130,8 +131,9 @@ public class practika2 {
                 //System.out.println("Data save");
             }       
         }
-
+    //task3
     public static void task3(String fileName) {
+
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))){
             String text;
             StringBuilder result = new StringBuilder();
@@ -179,7 +181,34 @@ public class practika2 {
         finally {
             System.out.println("Text rebuild");
         }
+    }
+    //task4
+    public static void task4(int[] array) {
+
+        Logger logger = Logger.getLogger (practika2.class.getName ());
+        ConsoleHandler ch = new ConsoleHandler();
+        logger.addHandler(ch);
+        //SimpleFormatter sFormat = new SimpleFormatter();
+        XMLFormatter xml = new XMLFormatter();
+        ch.setFormatter(xml);
         
+
+        int min = array[0];
+        int max = array[0];
         
+        for (int i = 0; i < array.length; i++) {
+            if (array[i]>= max) {
+                max = array[i];
+            }
+            else
+            {  
+                if (array[i]<=min) {
+                    min = array[i];
+                }  
+            }
+        }
+        System.out.println("minimum = " + min);
+        System.out.println("maximum = " + max);
+        logger.info("Тестовое логгирование");
     }
 }
