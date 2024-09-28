@@ -19,10 +19,6 @@
 public class lection {
         
     public static void main(String[] args) {
-        String[] headers = {"Name", "Age", "City"};
-        String a = headers.toString();
-
-        System.out.println(a);
-
+        
     }
 }
