@@ -68,7 +68,7 @@ public class practica4 {
         // System.out.println(countOccurrences("apple",list));
 
         //Task4
-
+        
 
     }
     
