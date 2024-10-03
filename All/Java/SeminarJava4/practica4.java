@@ -68,14 +68,19 @@ public class practica4 {
         // System.out.println(countOccurrences("apple",list));
 
         //Task4
-        
+        //не совсем понятна постановка задачи
+
+        //Task5*
 
     }
     
+
+    static public removeAllOccurrences(){
+        return;
+    }
+
+
     static public Deque<Integer> rotateDeque(Deque<Integer> dequeInt, int n){
-        
-
-
         return dequeInt
     }
 
